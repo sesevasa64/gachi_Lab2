@@ -18,7 +18,7 @@ class Matrix(np.ndarray):
 
     @staticmethod
     def ones(size) -> 'Matrix':
-        return np.ones((size, size)).view(Matrix)
+        return np.eye(size).view(Matrix)
 
     @staticmethod
     def zeros(size) -> 'Matrix':
