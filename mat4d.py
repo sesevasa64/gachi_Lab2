@@ -129,3 +129,31 @@ class Mat4d:
     @staticmethod
     def p_kz(m):
         return Mat4d.reflection(z=0, m=m)
+
+    @staticmethod
+    def ref_plane_2_points(vecA: Vector, vecB : Vector):
+        vx = vecB[0] - vecA[0]
+        vy = vecB[1] - vecA[1]
+        vz = vecB[2] - vecA[2]
+        lx = vx/sqrt(vx**2+vy**2+vz**2)
+        ly = vy/sqrt(vx**2+vy**2+vz**2)
+        lz = vz/sqrt(vx**2+vy**2+vz**2)
+        h = lx*vecA[0]+ly*vecA[1]+lz*vecA[2]
+        return Mat([[1 - 2*lx**2,               -2*lx*ly,       -2*lx*lz, 0],
+                    [-2*lx*ly,                  1-2*ly**2,      -2*ly*lz, 0],
+                    [-2*lx*lz,                  -2*ly*lz,       1-2*lz**2, 0],
+                    [2*lx*h,                    2*ly*h,         2*lz*h, 1]])
+
+    @staticmethod
+    def ref_plane_3_points(pA: Vector, pB : Vector, pC: Vector):
+        vx = (pB[1] - pA[1])*(pC[2]-pA[2])-(pB[2]-pA[2])*(pC[1]-pA[1])
+        vy = (pB[2] - pA[2])*(pC[0]-pA[0])-(pB[0]-pA[0])*(pC[2]-pA[2])
+        vz = (pB[0] - pA[0])*(pC[1]-pA[1])-(pB[1]-pA[1])*(pC[0]-pA[0])
+        lx = vx/sqrt(vx**2+vy**2+vz**2)
+        ly = vy/sqrt(vx**2+vy**2+vz**2)
+        lz = vz/sqrt(vx**2+vy**2+vz**2)
+        h = lx*pA[0]+ly*pA[1]+lz*pA[2]
+        return Mat([[1 - 2*lx**2,               -2*lx*ly,       -2*lx*lz, 0],
+                    [-2*lx*ly,                  1-2*ly**2,      -2*ly*lz, 0],
+                    [-2*lx*lz,                  -2*ly*lz,       1-2*lz**2, 0],
+                    [2*lx*h,                    2*ly*h,         2*lz*h, 1]])
