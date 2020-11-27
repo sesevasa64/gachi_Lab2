@@ -157,3 +157,28 @@ class Mat4d:
                     [-2*lx*ly,                  1-2*ly**2,      -2*ly*lz, 0],
                     [-2*lx*lz,                  -2*ly*lz,       1-2*lz**2, 0],
                     [2*lx*h,                    2*ly*h,         2*lz*h, 1]])
+                    
+        @staticmethod
+        def rotate_straight_line(pA: Vector, pB : Vector, angle):
+            ABx = pB[0] - pA[0]
+            ABy = pB[1] - pA[1]
+            ABz = pB[2] - pA[2]
+            lx = ABx/sqrt(ABx**2+ABy**2+ABz**2)
+            ly = ABy/sqrt(ABx**2+ABy**2+ABz**2)
+            lz = ABz/sqrt(ABx**2+ABy**2+ABz**2)
+            a = lx**2+cos(angle)*(1-lx**2)
+            b = lx*ly*(1-cos(angle))+lz*sin(angle)
+            c = lx*lz*(1-cos(angle))-ly*sin(angle)
+            d = lx*ly*(1-cos(angle))-lz*sin(angle)
+            e = ly**2+cos(angle)*(1-ly**2)
+            f = lz*ly*(1-cos(angle))+lx*sin(angle)
+            g = lz*lx*(1-cos(angle))+ly*sin(angle)
+            h = lz*ly*(1-cos(angle))-lx*sin(angle)
+            i = lz**2+cos(angle)*(1-lz**2)
+            k = pA[0]*(1-a)-pA[1]*d-pA[2]*g
+            l = -pA[0]*b+pA[1]*(1-e)-pA[2]*h
+            m = -pA[0]*c-pA[1]*f+pA[2]*(1-i)
+            return Mat([[a,b,c,0],
+                        [d,e,f,0],
+                        [g,h,i,0],
+                        [k,l,m,1]])
