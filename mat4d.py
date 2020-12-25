@@ -220,7 +220,7 @@ class Mat4d:
         ly = vy / sqrt(vx ** 2 + vy ** 2 + vz ** 2)
         lz = vz / sqrt(vx ** 2 + vy ** 2 + vz ** 2)
         lam = sqrt(ly ** 2 + lz ** 2)
-        a = lam - fz * cos(angle)
+        a = lam - lx * fz * cos(angle)
         b = -lx * fz * sin(angle)
         d = -ly * (lx / lam + fz * cos(angle))
         e = lz / lam - ly * fz * sin(angle)
