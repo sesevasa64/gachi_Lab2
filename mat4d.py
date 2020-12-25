@@ -204,3 +204,31 @@ class Mat4d:
                     [-lx * ly / lam, lz / lam, 0, 0],
                     [-lx * lz / lam, -ly / lam, 0, 0],
                     [k, l, 0, 1]])
+
+    @staticmethod
+    def kosoug(a: Vector, b: Vector, c: Vector, fz = 1/2, angle = pi/6):
+        ABx = b[0] - a[0]
+        ABy = b[1] - a[1]
+        ABz = b[2] - a[2]
+        ACx = c[0] - a[0]
+        ACy = c[1] - a[1]
+        ACz = c[2] - a[2]
+        vx = ABy * ACz - ABz * ACy
+        vy = ABz * ACx - ABx * ACz
+        vz = ABx * ACy - ABy * ACx
+        lx = vx / sqrt(vx ** 2 + vy ** 2 + vz ** 2)
+        ly = vy / sqrt(vx ** 2 + vy ** 2 + vz ** 2)
+        lz = vz / sqrt(vx ** 2 + vy ** 2 + vz ** 2)
+        lam = sqrt(ly ** 2 + lz ** 2)
+        a = lam - fz * cos(angle)
+        b = -lx * fz * sin(angle)
+        d = -ly * (lx / lam + fz * cos(angle))
+        e = lz / lam - ly * fz * sin(angle)
+        g = -lz * (lx / lam + fz * cos(angle))
+        h = -ly / lam - lz * fz * sin(angle)
+        l = -a * a[0] - d * a[1] - g * a[2]
+        m = -b * a[0] - e * a[1] - h * a[2]
+        return Mat([[a, b, 0, 0],
+                    [d, e, 0, 0],
+                    [g, h, 0, 0],
+                    [l, m, 0, 1]])
