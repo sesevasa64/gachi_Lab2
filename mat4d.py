@@ -220,18 +220,18 @@ class Mat4d:
         ly = vy / sqrt(vx ** 2 + vy ** 2 + vz ** 2)
         lz = vz / sqrt(vx ** 2 + vy ** 2 + vz ** 2)
         lam = sqrt(ly ** 2 + lz ** 2)
-        a = lam - lx * fz * cos(angle)
-        b = -lx * fz * sin(angle)
-        d = -ly * (lx / lam + fz * cos(angle))
-        e = lz / lam - ly * fz * sin(angle)
-        g = -lz * (lx / lam + fz * cos(angle))
-        h = -ly / lam - lz * fz * sin(angle)
-        l = -a * a[0] - d * a[1] - g * a[2]
-        m = -b * a[0] - e * a[1] - h * a[2]
-        return Mat([[a, b, 0, 0],
-                    [d, e, 0, 0],
-                    [g, h, 0, 0],
-                    [l, m, 0, 1]])
+        a1 = lam - lx * fz * cos(angle)
+        b1 = -lx * fz * sin(angle)
+        d1 = -ly * (lx / lam + fz * cos(angle))
+        e1 = lz / lam - ly * fz * sin(angle)
+        g1 = -lz * (lx / lam + fz * cos(angle))
+        h1 = -ly / lam - lz * fz * sin(angle)
+        l1 = -a1 * a[0] - d1 * a[1] - g1 * a[2]
+        m1 = -b1 * a[0] - e1 * a[1] - h1 * a[2]
+        return Mat([[a1, b1, 0, 0],
+                    [d1, e1, 0, 0],
+                    [g1, h1, 0, 0],
+                    [l1, m1, 0, 1]])
 
     @staticmethod
     def kosougOXY(fz, angle):
