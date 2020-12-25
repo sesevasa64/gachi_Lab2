@@ -232,3 +232,38 @@ class Mat4d:
                     [d, e, 0, 0],
                     [g, h, 0, 0],
                     [l, m, 0, 1]])
+
+    @staticmethod
+    def kosougOXY(fz, angle):
+        return Mat([[1, 0, 0, 0],
+                    [0, 1, 0, 0],
+                    [-fz * cos(angle), -fz * sin(angle), 0, 0],
+                    [0, 0, 0, 1]])
+
+    @staticmethod
+    def kabine():
+        return Mat4d.kosougOXY(0.5, pi/6)
+    
+    @staticmethod
+    def kavalie():
+        return Mat4d.kosougOXY(1, pi/3)
+
+    @staticmethod
+    def aksoug(fx, fy, fz):
+        a, b = None, None
+        if fx == fy and fy != fz:
+            b = asin(fz / sqrt(2 - fz ** 2))
+            a = asin(fz / sqrt(2))
+        if fx == fz and fz != fy:
+            b = pi / 4
+            a = 228
+        if fy == fz and fz != fx:
+            b = asin(sqrt((2 * fx ** 2 - 2)/(fx ** 2 - 2)))
+            a = asin(fx / sqrt(2))
+        if fx == fy == fz:
+            b = pi / 4
+            a = acos(sqrt(2 / 3))
+        return Mat([[cos(b), sin(b) * sin(a), 0, 0],
+                    [0, cos(a), 0, 0],
+                    [sin(b), -cos(b) * sin(a), 0, 0],
+                    [0, 0, 0, 1]])
